@@ -1,0 +1,11 @@
+:root{
+  --hero-bg:#f6f5f2;
+  --hero-title: clamp(2.2rem, 4vw + 1rem, 5rem);
+  --hero-sub: clamp(1.1rem, 1.2vw + .9rem, 2rem);
+}
+.hero{background:var(--hero-bg); padding:clamp(2rem,6vw,6rem) 0; border-radius:.75rem}
+.hero .wrap{max-width:1100px; margin:0 auto; padding:0 1.25rem}
+.hero .brand{display:flex; align-items:center; gap:.6rem; font-weight:700; font-size:clamp(1.25rem,1.8vw,.9rem)}
+.hero .brand img{width:40px; height:40px}
+.hero h1{margin:.5rem 0 0; line-height:1.1; font-size:var(--hero-title)}
+.hero p{margin:.4rem 0 0; line-height:1.35; font-size:var(--hero-sub)}
