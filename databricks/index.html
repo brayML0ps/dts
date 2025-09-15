@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.19">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
       
       
 
@@ -44,6 +44,8 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -449,47 +451,61 @@
 <div class="admonition abstract">
 <p class="admonition-title">What this page covers</p>
 <p>A pragmatic reference you can skim during interviews or reuse in projects:
-<strong>ingestion → quality → medallion modeling → governance → performance → cost</strong>.
-All examples are SQL-first with quick Python tabs where useful.</p>
+<strong>ingestion → quality → medallion modeling → governance → performance → cost</strong>.<br />
+All examples are SQL‑first, with quick Python tabs where helpful.</p>
 </div>
-<hr />
 <h2 id="tldr-architecture-medallion-governance">TL;DR Architecture (Medallion + Governance)<a class="headerlink" href="#tldr-architecture-medallion-governance" title="Permanent link">&para;</a></h2>
 <p>```mermaid
+%%{ init: { "flowchart": { "nodeSpacing": 50, "rankSpacing": 70 } } }%%
 flowchart LR
+  %% Groups
   subgraph Sources
-    A1[Batch files (CSV/Parquet)]:::src
-    A2[Kafka/Kinesis]:::src
-    A3[DB CDC]:::src
-  end
-  subgraph Ingestion
-    B1[Auto Loader]:::ing
-    B2[COPY INTO]:::ing
-    B3[Streaming Reads]:::ing
-  end
-  subgraph Bronze
-    C1[Raw Delta Tables]:::bronze
-  end
-  subgraph Silver
-    D1[Cleaned + Conformed]:::silver
-  end
-  subgraph Gold
-    E1[Aggregates &amp; Marts]:::gold
-  end
-  subgraph Governance
-    UC[Unity Catalog: Catalog/Schema/Table, ACLs, Lineage, Tags]:::gov
-  end
-A1 --&gt; B1 --&gt; C1 --&gt; D1 --&gt; E1
-A2 --&gt; B3 --&gt; C1
-A3 --&gt; B2 --&gt; C1
-UC -. manages .- C1
-UC -. manages .- D1
-UC -. manages .- E1
-classDef src fill:#eef,stroke:#99f
-classDef ing fill:#efe,stroke:#5b5
-classDef bronze fill:#f3f3f3,stroke:#999
-classDef silver fill:#e5f6ff,stroke:#39f
-classDef gold fill:#fff5cc,stroke:#fc0
-classDef gov fill:#ffe5f2,stroke:#f39</p>
+    A1[Batch files\n(CSV/Parquet)]
+    A2[Kafka/Kinesis]
+    A3[DB CDC]
+  end</p>
+<p>subgraph Ingestion
+    B1[Auto Loader]
+    B2[COPY INTO]
+    B3[Streaming Reads]
+  end</p>
+<p>subgraph Bronze
+    C1[Raw Delta Tables]
+  end</p>
+<p>subgraph Silver
+    D1[Cleaned &amp; Conformed]
+  end</p>
+<p>subgraph Gold
+    E1[Aggregates &amp; Marts]
+  end</p>
+<p>subgraph Governance
+    UC[Unity Catalog\nCatalog/Schema/Table, ACLs,\nLineage, Tags]
+  end</p>
+<p>%% Flows
+  A1 --&gt; B1
+  A2 --&gt; B1
+  A3 --&gt; B1
+  B1 --&gt; C1
+  B2 --&gt; C1
+  B3 --&gt; C1
+  C1 --&gt; D1
+  D1 --&gt; E1
+  UC -. manages .- C1
+  UC -. manages .- D1
+  UC -. manages .- E1</p>
+<p>%% Styling
+  class A1,A2,A3 src;
+  class B1,B2,B3 ing;
+  class C1 bronze;
+  class D1 silver;
+  class E1 gold;
+  class UC gov;</p>
+<p>classDef src    fill:#eef7ff,stroke:#1f6feb,stroke-width:1px;
+  classDef ing    fill:#f6f8fa,stroke:#57606a,stroke-width:1px;
+  classDef bronze fill:#fff3e0,stroke:#c77800,stroke-width:1px;
+  classDef silver fill:#f5f5f5,stroke:#9e9e9e,stroke-width:1px;
+  classDef gold   fill:#fff8e1,stroke:#b59f3b,stroke-width:1px;
+  classDef gov    fill:#f0e6ff,stroke:#6e40c9,stroke-width:1px;</p>
 
 
 
@@ -541,7 +557,7 @@ classDef gov fill:#ffe5f2,stroke:#f39</p>
       <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.instant", "toc.follow", "content.code.copy"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.92b07e13.min.js"></script>
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js"></script>
       

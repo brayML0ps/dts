@@ -1,0 +1,6 @@
+/* docs/stylesheets/extra.css */
+.mermaid {
+  margin: 1rem auto;
+  max-width: 1100px;
+}
+.mermaid svg { height: auto !important; }
