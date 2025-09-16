@@ -1,11 +1,43 @@
-:root{
-  --hero-bg:#f6f5f2;
-  --hero-title: clamp(2.2rem, 4vw + 1rem, 5rem);
-  --hero-sub: clamp(1.1rem, 1.2vw + .9rem, 2rem);
+/* Hero section */
+.hero {
+  margin: 0 0 2rem 0;
+  padding: 3.5rem 1.25rem;
+  border-radius: .8rem;
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(255,54,33,.12), transparent 60%),
+              linear-gradient(180deg, rgba(255,54,33,.06), rgba(255,54,33,0) 50%);
+  border: 1px solid rgba(27,49,57,.08);
 }
-.hero{background:var(--hero-bg); padding:clamp(2rem,6vw,6rem) 0; border-radius:.75rem}
-.hero .wrap{max-width:1100px; margin:0 auto; padding:0 1.25rem}
-.hero .brand{display:flex; align-items:center; gap:.6rem; font-weight:700; font-size:clamp(1.25rem,1.8vw,.9rem)}
-.hero .brand img{width:40px; height:40px}
-.hero h1{margin:.5rem 0 0; line-height:1.1; font-size:var(--hero-title)}
-.hero p{margin:.4rem 0 0; line-height:1.35; font-size:var(--hero-sub)}
+.hero h1 {
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  margin: 0 0 .5rem 0;
+}
+.hero p.lead {
+  font-size: clamp(1.1rem, 1.6vw, 1.25rem);
+  margin: 0 0 1.25rem 0;
+  color: var(--md-default-fg-color);
+  opacity: .9;
+}
+.hero .cta { display: inline-flex; gap: .6rem; flex-wrap: wrap; margin-top: .75rem; }
+.hero .btn {
+  display: inline-block; padding: .6rem 1rem; border-radius: .5rem;
+  text-decoration: none; font-weight: 600; border: 1px solid transparent;
+}
+.hero .btn.primary { background: var(--md-primary-fg-color); color: #fff; }
+.hero .btn.secondary { background: transparent; color: var(--md-primary-fg-color); border-color: currentColor; }
+
+/* Feature grid */
+.feature-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem; margin: 1.5rem 0;
+}
+.feature {
+  background: rgba(255,255,255,.6); border: 1px solid rgba(27,49,57,.08);
+  border-radius: .6rem; padding: 1rem;
+}
+[data-md-color-scheme="slate"] .feature {
+  background: rgba(20,34,41,.7); border-color: rgba(255,255,255,.08);
+}
+
+.figure { margin: 1rem 0 0; text-align: center; }
+.figure img { max-width: 100%; height: auto; border-radius: .5rem; border: 1px solid rgba(27,49,57,.08); }
+.figure figcaption { font-size: .9rem; opacity: .8; margin-top: .25rem; }

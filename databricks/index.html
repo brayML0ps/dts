@@ -478,64 +478,37 @@
 
 
 <h1 id="databricks-deep-dive-lakehouse-patterns-dlt-sql">Databricks Deep Dive — Lakehouse Patterns, DLT &amp; SQL<a class="headerlink" href="#databricks-deep-dive-lakehouse-patterns-dlt-sql" title="Permanent link">&para;</a></h1>
-<div class="admonition abstract">
+<div class="admonition info">
 <p class="admonition-title">What this page covers</p>
-<p>A pragmatic reference you can skim during interviews or reuse in projects:
-<strong>ingestion → quality → medallion modeling → governance → performance → cost</strong>.<br />
-All examples are SQL‑first, with quick Python tabs where helpful.</p>
+<p>A pragmatic reference you can skim during interviews or reuse in projects: <strong>ingestion → quality → medallion modeling → governance → performance → cost</strong>.<br />
+Examples are <strong>SQL‑first</strong>, with quick tabs for Python where helpful.</p>
 </div>
 <h2 id="tldr-architecture-medallion-governance">TL;DR Architecture (Medallion + Governance)<a class="headerlink" href="#tldr-architecture-medallion-governance" title="Permanent link">&para;</a></h2>
 <p>```mermaid
-%%{ init: { "flowchart": { "nodeSpacing": 50, "rankSpacing": 70 } } }%%
+%%{init: {"flowchart": {"nodeSpacing": 50, "rankSpacing": 70}}}%%
 flowchart LR
-  %% Groups
-  subgraph Sources
-    A1[Batch files\n(CSV/Parquet)]
-    A2[Kafka/Kinesis]
-    A3[DB CDC]
+  classDef store stroke-dasharray: 3 3</p>
+<p>subgraph AWS[<strong>AWS Account</strong>]
+    L["S3 Landing Bucket"]
+    B[(Delta <strong>Bronze</strong>)]
+    S[(Delta <strong>Silver</strong>)]
+    G[(Delta <strong>Gold</strong>)]
+    GL[(AWS Glue <strong>Data Catalog</strong>)]
+    ATH[(<strong>Athena</strong>)]
+    IAM((<strong>IAM / Federation</strong>))
   end</p>
 <p>subgraph Ingestion
-    B1[Auto Loader]
-    B2[COPY INTO]
-    B3[Streaming Reads]
+    K[[Kafka / Kinesis Streams]]
+    Batch[[Batch Files]]
   end</p>
-<p>subgraph Bronze
-    C1[Raw Delta Tables]
-  end</p>
-<p>subgraph Silver
-    D1[Cleaned &amp; Conformed]
-  end</p>
-<p>subgraph Gold
-    E1[Aggregates &amp; Marts]
-  end</p>
-<p>subgraph Governance
-    UC[Unity Catalog\nCatalog/Schema/Table, ACLs,\nLineage, Tags]
-  end</p>
-<p>%% Flows
-  A1 --&gt; B1
-  A2 --&gt; B1
-  A3 --&gt; B1
-  B1 --&gt; C1
-  B2 --&gt; C1
-  B3 --&gt; C1
-  C1 --&gt; D1
-  D1 --&gt; E1
-  UC -. manages .- C1
-  UC -. manages .- D1
-  UC -. manages .- E1</p>
-<p>%% Styling
-  class A1,A2,A3 src;
-  class B1,B2,B3 ing;
-  class C1 bronze;
-  class D1 silver;
-  class E1 gold;
-  class UC gov;</p>
-<p>classDef src    fill:#eef7ff,stroke:#1f6feb,stroke-width:1px;
-  classDef ing    fill:#f6f8fa,stroke:#57606a,stroke-width:1px;
-  classDef bronze fill:#fff3e0,stroke:#c77800,stroke-width:1px;
-  classDef silver fill:#f5f5f5,stroke:#9e9e9e,stroke-width:1px;
-  classDef gold   fill:#fff8e1,stroke:#b59f3b,stroke-width:1px;
-  classDef gov    fill:#f0e6ff,stroke:#6e40c9,stroke-width:1px;</p>
+<p>K --&gt;|Auto Loader| B
+  Batch --&gt;|COPY| L --&gt; B
+  B --&gt;|Dedupe + Watermark| S
+  S --&gt;|Aggregations| G
+  G --&gt; ATH
+  G --&gt; Druid[(<strong>Druid</strong>)]
+  ML((<strong>MLflow Tracking</strong>)) --&gt; G
+  IAM -.-&gt; GL</p>
 
 
 

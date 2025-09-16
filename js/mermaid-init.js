@@ -1,24 +1,18 @@
-/* docs/js/mermaid-init.js */
+// Initialize Mermaid and re-run after Material's instant navigation
 (function () {
-  function runMermaid() {
+  function initMermaid() {
     if (!window.mermaid) return;
-    // Initialize once
-    if (!window.__mermaid_inited__) {
-      mermaid.initialize({
-        startOnLoad: false,   // we trigger manually
-        securityLevel: "strict"
-      });
-      window.__mermaid_inited__ = true;
+    try {
+      const scheme = document.documentElement.getAttribute("data-md-color-scheme");
+      const theme = scheme === "slate" ? "dark" : "default";
+      window.mermaid.initialize({ startOnLoad: false, theme });
+      window.mermaid.run({ querySelector: ".mermaid" });
+    } catch (e) {
+      console.error("Mermaid init failed:", e);
     }
-    // (Re)render all diagrams on the current page
-    mermaid.init(undefined, document.querySelectorAll(".mermaid"));
   }
-
-  // First load
-  document.addEventListener("DOMContentLoaded", runMermaid);
-
-  // Re-run on every page change (Material for MkDocs hook)
+  document.addEventListener("DOMContentLoaded", initMermaid);
   if (window.document$) {
-    document$.subscribe(runMermaid);
+    window.document$.subscribe(initMermaid);
   }
 })();

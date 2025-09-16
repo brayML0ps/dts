@@ -75,11 +75,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#deep-dives-portfolio" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -231,8 +226,6 @@
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
-      
-        
       
       
       <a href="." class="md-nav__link md-nav__link--active">
@@ -400,8 +393,6 @@
   
   
   
-    
-  
   
 </nav>
                   </div>
@@ -417,8 +408,27 @@
 
 
 
-<h1 id="deep-dives-portfolio">Deep Dives Portfolio<a class="headerlink" href="#deep-dives-portfolio" title="Permanent link">&para;</a></h1>
-<p>Welcome! Use the left nav or search to explore.</p>
+<!-- Hero -->
+<div class="hero">
+  <h1>BrayMLOps — Deep Dives</h1>
+  <p class="lead">Databricks, ETL/ELT, AWS solutions, and stock analytics — published with a Databricks‑inspired MkDocs Material skin.</p>
+  <div class="cta">
+    <a class="btn primary" href="databricks/">Databricks</a>
+    <a class="btn secondary" href="aws/">AWS</a>
+  </div>
+</div>
+
+<div class="feature-grid">
+  <div class="feature"><h3>Markdown‑first</h3><p>Use <strong>Mermaid</strong> for pipelines and commit <strong>SVG</strong> for architecture diagrams.</p></div>
+  <div class="feature"><h3>Repo‑friendly</h3><p>Text diffs, PR reviews, and CI via <code>mkdocs gh-deploy</code> or GitHub Actions.</p></div>
+  <div class="feature"><h3>Databricks patterns</h3><p>Bronze → Silver → Gold, expectations, error paths, and SLAs.</p></div>
+  <div class="feature"><h3>AWS‑ready</h3><p>IAM federation, Glue Catalog, Athena, Druid, and MLflow.</p></div>
+</div>
+
+<figure class="figure">
+  <img src="images/lakehouse_architecture.svg" alt="Lakehouse architecture diagram with Landing, Bronze, Silver, Gold, Glue, Athena, MLflow and Druid on AWS">
+  <figcaption>Figure: Lakehouse architecture (exported as SVG).</figcaption>
+</figure>
 
 
 
